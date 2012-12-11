@@ -1,15 +1,16 @@
 import processing.serial.*;
 import httprocessing.*;
 import gifAnimation.*;
-import org.json.*;
 import processing.video.*;
 import org.seltar.Bytes2Web.*;
                     
                     
-String postsite = "http://screambooth.herokuapp.com/photos/add";
-//String postsite = "localhost:5000/photos/add";
+//String postsite = "http://screambooth.herokuapp.com/photos/add";
+String postsite = "http://127.0.0.1:5000/photos/add";
 String inString;                    
-                
+          
+PFont font;
+
                    
 Serial myPort; 
 GifMaker gifExport;
@@ -19,9 +20,10 @@ int countdowntimer = 10;
 int imageName = 0;
 int x = 100;  // x- position text
 int y = height-50; // y- position text
-int timestamp;
+long timestamp;
 int lf = 10;
-Date d = new Date();
+int meter;
+
 
 boolean micInput = false;
 
@@ -31,12 +33,16 @@ float changea = 2.5;
 float changeb = -2.5;
 
 void setup() {
-  size(640, 480, P2D);
+  size(1600, 900, P2D);
   background(0);
+  font = createFont("Creepster-Regular.ttf", 100);
+  textFont(font, 60);
   String[] cameras = Capture.list();
   rectMode(CENTER);
   video = new Capture(this, cameras[0]);
   video.start();
+  
+     //meter = 0;
   
   myPort = new Serial(this, Serial.list()[0], 115200);
   println(Serial.list());
@@ -53,150 +59,125 @@ void draw() {
   rectMode(CENTER);
   noStroke();
   textAlign(CENTER);
-  textSize(80);
-  image (video, 0, 0);
+  textSize(100);
+  image (video, 200,0);
    
-  
-  
 
+   
+  pushStyle();
+  fill(0);
+  rectMode(CORNER);
+  rect(0, 875, width, height);
+  //fill(255, 0, 0);
+  //rect(0, 875, meter, height);
+  fill(255, 83, 53);
+  text("ITP HALLOWEEN PARTY 2012", width/2, height-82);
+  popStyle();
+  
+ 
+  
   if (globalframecount == 0) {
-    fill(255);
-    rect(640, 480, width*2, height*2);
-    fill(0);
+     PImage bck = loadImage("bkgd.jpg");
+  image(bck, 200, 0);
+   // fill(0);
+  //  rect(640, 480, width*2, height*2);
+    fill(255, 83, 53);
     text("SCREAM!", width/2, height/2);
     myPort.write('1');
   }
   if (globalframecount < 1100 && globalframecount > 0 ) {
-    if (globalframecount == 100) {
-      
+    if (globalframecount == 40) {
+      Date d = new Date();
+      timestamp = d.getTime();
 
-      gifExport = new GifMaker(this, "images/" + d.getTime() + ".gif");
-      gifExport.setQuality(256);
+      gifExport = new GifMaker(this, "images/" + timestamp + ".gif");
+      gifExport.setQuality(10 );
+      //gifExport.setSize(640,480);
       gifExport.setRepeat(0);
     }
     
     if (globalframecount > 0 && globalframecount < 50) {
      fill(0, 0, 0, 120);
       rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
+      rect(width/2, height/2-30, 350, 150); 
       fill(255);
-      text("3", width/2, height/2);
+      text("SCREAM!", width/2, height/2);
      
     }
-    if (globalframecount > 50 && globalframecount < 100) {
+    if (globalframecount == 51) {
+       fill(255);
+      rect(640, 480, width*2, height*2);
+    }
+
+    if (globalframecount == 52) {
+      saveFrame("img1.jpg");
+      PImage img1 = loadImage("img1.jpg");
+      img1.resize(640,480);
+      gifExport.setDelay(300);
+      gifExport.addFrame(img1);
+    }
+    if (globalframecount > 60 && globalframecount < 110) {
        fill(0, 0, 0, 120);
       rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
+      rect(width/2, height/2-30, 350, 150); 
       fill(255);
-      text("2", width/2, height/2);
+      text("SCREAM!", width/2, height/2);
     }
-    if (globalframecount > 100 && globalframecount < 150) {
-       fill(0, 0, 0, 120);
+    if (globalframecount == 111) {
+       fill(255);
+      rect(640, 480, width*2, height*2);
+    }
+    if (globalframecount == 112) {
+      saveFrame("img2.jpg");
+      PImage img2 = loadImage("img2.jpg");
+      img2.resize(640,480);
+      gifExport.setDelay(300);
+      gifExport.addFrame(img2);
+    }
+ 
+    if (globalframecount > 120 && globalframecount < 170) {
+        fill(0, 0, 0, 120);
       rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
+      rect(width/2, height/2-30, 350, 150); 
       fill(255);
-      text("1", width/2, height/2);
+      text("SCREAM!", width/2, height/2);
     }
-    if (globalframecount == 151) {
+    if (globalframecount == 171) {
+       fill(255);
+      rect(640, 480, width*2, height*2);
+    }
+    if (globalframecount == 172) {
+     saveFrame("img3.jpg");
+      PImage img3 = loadImage("img3.jpg");
+      img3.resize(640,480);
+      gifExport.setDelay(300);
+      gifExport.addFrame(img3);
+    }
+   
+    if (globalframecount > 180 && globalframecount < 230) {
+        fill(0, 0, 0, 120);
+      rectMode(CENTER);
+      rect(width/2, height/2-30, 350, 150); 
+      fill(255);
+      text("SCREAM!", width/2, height/2);
+    }
+   
+    if (globalframecount == 231) {
       fill(255);
       rect(640, 480, width*2, height*2);
     }
-    if (globalframecount == 152) {
+    if (globalframecount == 232) {
+      saveFrame("img4.jpg");
+      PImage img4 = loadImage("img4.jpg");
+      img4.resize(640,480);
       gifExport.setDelay(300);
-      gifExport.addFrame();
+      gifExport.addFrame(img4);
     }
-    if (globalframecount > 160 && globalframecount < 210) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("3", width/2, height/2);
-    }
-    if (globalframecount > 210 && globalframecount < 260) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("2", width/2, height/2);
-    }
-    if (globalframecount > 260 && globalframecount < 310) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("1", width/2, height/2);
-    }
-    if (globalframecount == 311) {
-      fill(255);
-      rect(640, 480, width*2, height*2);
-    }
-    if (globalframecount == 312) {
-      gifExport.setDelay(300);
-      gifExport.addFrame();
-    }
-    if (globalframecount > 320 && globalframecount < 370) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("3", width/2, height/2);
-    }
-    if (globalframecount > 370 && globalframecount < 420) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("2", width/2, height/2);
-    }
-    if (globalframecount > 420 && globalframecount < 470) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("1", width/2, height/2);
-    }
-    if (globalframecount == 471) {
-      fill(255);
-      rect(640, 480, width*2, height*2);
-    }
-    if (globalframecount == 472) {
-      gifExport.setDelay(300);
-      gifExport.addFrame();
-    }
-    if (globalframecount > 480 && globalframecount < 530) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("3", width/2, height/2);
-    }
-    if (globalframecount > 530 && globalframecount < 580) {
-       fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("2", width/2, height/2);
-    }
-    if (globalframecount > 580 && globalframecount < 630) {
-      fill(0, 0, 0, 120);
-      rectMode(CENTER);
-      rect(width/2, height/2-30, 50, 100); 
-      fill(255);
-      text("1", width/2, height/2);
-    }
-    if (globalframecount == 631) {
-      fill(255);
-      rect(640, 480, width*2, height*2);
-    }
-    if (globalframecount == 632) {
-      gifExport.setDelay(300);
-      gifExport.addFrame();
-    }
-    if (globalframecount == 633) {
+    if (globalframecount == 233) {
       gifExport.finish();
     }
     globalframecount++;
-    if (globalframecount == 634) {
+    if (globalframecount == 234) {
       postData();
       globalframecount = 0;
       micInput = false;
@@ -213,31 +194,33 @@ void serialEvent(Serial myPort){
   micInput = true;
   globalframecount = 1;
   myPort.write('0');
+//  meter = int(map(Integer.parseInt("inString"), 0, 1023, 0, width));
+  println("Meter: " + meter);
+  
+}
+
+void keyPressed(){
+  
+ switch(key){
+ 
+   case ' ':
+   globalframecount =1;
+   break;
+ 
+ }
   
 }
 
 void postData() {
-/*
-  ImageToWeb img = new ImageToWeb(this);
-    img.setType(ImageToWeb.GIF);
-    img.save("gif",true);
-    img.post("test",url,"gif-test",true);
-  */
-  
-  
- 
-  
-  JSONArray photo = new JSONArray();
-  
-  JSONObject img = new JSONObject();
-  img.put("photo", d.getTime());
-  photo.put(img);
+
   
   PostRequest post = new PostRequest(postsite);
-  post.addData("stuff", photo.toString());
+  post.addData("photo", String.valueOf(timestamp));
+  post.addData("mic", String.valueOf(inString));
+  post.addFile("img", "/Users/Kleeb2/Documents/Processing/ScreamBooth/images/" + timestamp + ".gif");
 
   post.send();
-  println(post.toString());
+  //println(post.toString());
   //check to make sure post is sent
   println("Reponse Content: " + post.getContent());
   //println("Reponse Content-Length Header: " + post.getHeader("Content-Length"));
